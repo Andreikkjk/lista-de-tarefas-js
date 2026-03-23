@@ -1,11 +1,5 @@
 // --- DESAFIO 1: A Lógica do Garçom ---
-//
-// SITUAÇÃO:
-// Você é um programador e o dono de um restaurante te pediu ajuda.
-// Ele tem uma lista de pedidos, mas a cozinha está uma bagunça.
-// Ele precisa que você entregue para o chef APENAS as comandas de "Massa".
-// 
-// OS DADOS:
+
 const pedidosDeHoje = [
     { mesa: 1, prato: "Pizza", status: "preparando" },
     { mesa: 2, prato: "Massa", status: "aguardando" },
@@ -13,13 +7,20 @@ const pedidosDeHoje = [
     { mesa: 4, prato: "Massa", status: "pronto" }
 ];
 
-// SUA TAREFA:
-// Sem escrever NENHUM código JavaScript complexo ainda... 
-// Escreva AQUI EMBAIXO, em PORTUGUÊS (como uma receita de bolo), 
-// passo a passo o que a sua cabeça teria que fazer para olhar essa lista e 
-// separar só as Massas:
-//
-// Passo 1: 
-// Passo 2:
-// Passo 3:
-// ...
+// SUA LÓGICA (O ALGORITMO):
+// Passo 1: Pegar as comandas
+// Passo 2: olhar cada comanda
+// Passo 3: se for massa, separar
+// Passo 4: se não for, ignorar
+// Passo 5: repetir ate acabarem as comandas
+// Passo 6: entregar as massas para o chef
+
+// --- A HORA DO CÓDIGO (A IMPLEMENTAÇÃO) ---
+
+const massasParaOChef = pedidosDeHoje.filter(pedido => {
+    // Escreva a lógica aqui: Queremos retornar o pedido 
+    // APENAS se o prato for igual a "Massa"
+    return pedido.prato === "Massa"; 
+});
+
+console.log("Comandas de Massa para o Chef:", massasParaOChef);
