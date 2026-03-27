@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque Simples | Premium UI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <!-- Background Animated Glowing Orbs -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="ph-fill ph-package"></i>
+                </div>
+                <h1>Estoque<span>PRO</span></h1>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="ph ph-stack"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="label">Total Itens</span>
+                        <span id="stat-total" class="value">0</span>
+                    </div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-icon warning-icon">
+                        <i class="ph ph-warning-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="label">Estoque Baixo</span>
+                        <span id="stat-low" class="value">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-panel glass-panel">
+                <div class="panel-header">
+                    <i class="ph-fill ph-sliders-horizontal"></i>
+                    <h3>Filtros Dinâmicos</h3>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-category">Categoria</label>
+                    <select id="filter-category" class="glass-input">
+                        <option value="Todas">Todas</option>
+                        <option value="Eletrônicos">Eletrônicos</option>
+                        <option value="Papelaria">Papelaria</option>
+                        <option value="Móveis">Móveis</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-price">Preço Mínimo (R$)</label>
+                    <input type="number" id="filter-price" class="glass-input" min="0" placeholder="Ex: 50">
+                </div>
+                
+                <hr class="panel-divider">
+
+                <button id="btn-add-product" class="btn-primary glow-effect">
+                    <i class="ph ph-plus-circle"></i> Novo Produto
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Area -->
+        <main class="main-content">
+            <section class="inventory-section glass-panel">
+                <div class="section-header">
+                    <div>
+                        <h2>Inventário Atual</h2>
+                        <p class="subtitle">Gerencie seus produtos e estoque em tempo real</p>
+                    </div>
+                    <div class="actions">
+                        <button id="btn-reset" class="btn-secondary">
+                            <i class="ph ph-arrows-counter-clockwise"></i> Limpar Filtros
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table id="inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Categoria</th>
+                                <th>Preço Unitário</th>
+                                <th style="text-align: center;">Estoque</th>
+                                <th>Ações Rápidas</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-body">
+                            <!-- JS will populate this dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Console Log Panel -->
+            <footer class="system-logs glass-panel">
+                <div class="log-header">
+                    <div class="log-title">
+                        <i class="ph ph-terminal-window"></i>
+                        <h3>Terminal do Sistema</h3>
+                    </div>
+                    <div class="status-indicator">
+                        <span class="status-text">Online</span>
+                        <div class="status-dot pulse"></div>
+                    </div>
+                </div>
+                <div id="log-content" class="log-body">
+                    <p class="log-entry info"><span class="timestamp">[00:00:00]</span> Inicializando módulos de UI...</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Modal Add Product -->
+    <div id="modal-add" class="modal-overlay hidden">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2><i class="ph ph-package"></i> Cadastrar Produto</h2>
+                <button id="btn-close-modal" class="btn-icon"><i class="ph ph-x"></i></button>
+            </div>
+            <form id="form-add-product" class="modal-form">
+                <div class="form-group">
+                    <label for="new-name">Nome do Produto</label>
+                    <input type="text" id="new-name" class="glass-input" required placeholder="Ex: Monitor 24 polegadas">
+                </div>
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label for="new-category">Categoria</label>
+                        <select id="new-category" class="glass-input" required>
+                            <option value="" disabled selected>Selecione...</option>
+                            <option value="Eletrônicos">Eletrônicos</option>
+                            <option value="Papelaria">Papelaria</option>
+                            <option value="Móveis">Móveis</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label for="new-price">Preço Unitário (R$)</label>
+                        <input type="number" id="new-price" class="glass-input" required min="0.01" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group flex-1">
+                        <label for="new-qty">Qtd Inicial</label>
+                        <input type="number" id="new-qty" class="glass-input" required min="1" placeholder="1">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="btn-cancel-modal" class="btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn-primary glow-effect">Salvar Produto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
