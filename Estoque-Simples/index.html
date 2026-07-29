@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cockpit | Controle de Estoque</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Syne:wght@400..800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Noise Texture Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- Ambient Light Blobs -->
+    <div class="ambient-blob blob-1"></div>
+    <div class="ambient-blob blob-2"></div>
+    <div class="ambient-blob blob-3"></div>
+
+    <div class="layout-grid">
+        <!-- WORKSPACE -->
+        <main class="main-workspace">
+            <header class="header">
+                <div class="title-block">
+                    <div class="title-prefix">SYS://</div>
+                    <h1 class="title">INVENTORY</h1>
+                </div>
+                
+                <div class="stats-container">
+                    <div class="stat-box stat-cyan">
+                        <div class="stat-glow"></div>
+                        <span class="stat-label">TOTAL ITEMS</span>
+                        <span class="stat-value" id="stat-total">0</span>
+                    </div>
+                    <div class="stat-box stat-red">
+                        <div class="stat-glow"></div>
+                        <span class="stat-label">LOW STOCK</span>
+                        <span class="stat-value" id="stat-low">0</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Controls -->
+            <section class="controls glass-card">
+                <div class="filter-group">
+                    <label>CATEGORIA</label>
+                    <select id="filter-category">
+                        <option value="ALL">ALL CATEGORIES</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>PREÇO MIN</label>
+                    <input type="number" id="filter-min-price" placeholder="0.00">
+                </div>
+                <div class="filter-group">
+                    <label>PREÇO MAX</label>
+                    <input type="number" id="filter-max-price" placeholder="9999.00">
+                </div>
+                <div class="control-actions">
+                    <button id="btn-reset-filters" class="btn-ghost">[ RESET ]</button>
+                    <button id="btn-open-modal" class="btn-neon-cyan"><i class="ph ph-plus"></i> NEW ITEM</button>
+                    <button id="btn-open-cat-modal" class="btn-neon-purple"><i class="ph ph-folder-plus"></i> NEW CAT</button>
+                </div>
+            </section>
+
+            <!-- Data Table -->
+            <section class="data-view glass-card">
+                <table class="neon-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NOME</th>
+                            <th>CATEGORIA</th>
+                            <th>PREÇO</th>
+                            <th>QTD</th>
+                            <th>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-body"></tbody>
+                </table>
+            </section>
+        </main>
+
+        <!-- TERMINAL -->
+        <aside class="terminal-panel">
+            <div class="terminal-chrome">
+                <div class="terminal-dots">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                </div>
+                <span class="terminal-title">SYSTEM_LOG</span>
+                <div class="terminal-status">
+                    <span class="status-dot"></span> LIVE
+                </div>
+            </div>
+            <div class="terminal-scanlines"></div>
+            <div class="terminal-content" id="terminal-log"></div>
+        </aside>
+    </div>
+
+    <!-- MODAL: PRODUTO -->
+    <div id="modal-product" class="modal-overlay hidden">
+        <div class="modal-content glass-card">
+            <h2 class="modal-title">ADD_NEW_RECORD</h2>
+            <form id="form-product">
+                <div class="input-group">
+                    <label>NOME DO PRODUTO</label>
+                    <input type="text" id="input-nome" required>
+                </div>
+                <div class="input-group">
+                    <label>CATEGORIA</label>
+                    <select id="input-categoria" required></select>
+                </div>
+                <div class="input-group-row">
+                    <div class="input-group">
+                        <label>PREÇO (R$)</label>
+                        <input type="number" id="input-preco" step="0.01" required>
+                    </div>
+                    <div class="input-group">
+                        <label>QUANTIDADE</label>
+                        <input type="number" id="input-qtd" required>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-ghost" id="btn-cancel-modal">[ CANCEL ]</button>
+                    <button type="submit" class="btn-neon-cyan">EXECUTE_INSERT</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: CATEGORIA -->
+    <div id="modal-category" class="modal-overlay hidden">
+        <div class="modal-content glass-card modal-purple">
+            <h2 class="modal-title">ADD_NEW_CATEGORY</h2>
+            <form id="form-category">
+                <div class="input-group">
+                    <label>NOME DA CATEGORIA</label>
+                    <input type="text" id="input-cat-nome" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-ghost" id="btn-cancel-cat-modal">[ CANCEL ]</button>
+                    <button type="submit" class="btn-neon-purple">EXECUTE_INSERT</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+</body>
+</html>
