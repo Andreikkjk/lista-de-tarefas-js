@@ -1,8 +1,8 @@
 // ==========================================
 // CONFIGURAÇÕES DO SUPABASE (PREENCHA AQUI)
 // ==========================================
-const supabaseUrl = "https://jsfnrkezmszmxrvhanak.supabase.co"; // Cole sua URL do painel
-const supabaseKey = "sb_publishable_qrx57CWbXFl7sY3At3-ElQ_6gsJQMr1"; // Cole sua chave anon
+const supabaseUrl = ""; // Cole sua URL do painel
+const supabaseKey = ""; // Cole sua chave anon
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 // ==========================================
